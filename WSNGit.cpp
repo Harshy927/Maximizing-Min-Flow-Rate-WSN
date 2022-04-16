@@ -3,18 +3,21 @@
 //board 100 X 100
 
 
+
 #include<bits/stdc++.h>
 using namespace std;
 
 class node
 {
 	public:
-	pair<float,float> pos;
-	vector<node*> neighbour;
-	node(float x, float y)
+    int rate;//pkts/sec
+	pair<float,float> pos; // x,y coordinate on 100X100 board
+	vector<node*> neighbour; // neighbours within range
+	node(float x, float y,int rate)
 	{
 		this->pos.first = x;
 		this->pos.second = y;
+        this->rate = rate;
 	}
 
 	void addNeighbour(node *a)
@@ -52,7 +55,10 @@ int main()
 		float x,y;
 		cout<<"enter the x and y coordinates"<<endl;
 		cin>>x>>y;
-		node *temp = new node(x,y);
+        int r;
+        cout<<"Enter the rate of transfer(packets/s)"<<endl;
+        cin>>r;
+		node *temp = new node(x,y,r);
 		nod.push_back(temp);
 	}
 
@@ -70,16 +76,27 @@ int main()
 		}
 	}
 
-    for(int i = 0 ; i < nod.size() ; i++)
-    {
-        node *p = nod[i];
-        cout<<" neighbours of "<<p->pos.first<<endl;
-        for(auto it : p->neighbour)
-        {
-            cout<<it->pos.first<<" ";
-        }
-        cout<<endl;
-    }
+    // for(int i = 0 ; i < nod.size() ; i++)
+    // {
+    //     node *p = nod[i];
+    //     cout<<" neighbours of "<<p->pos.first<<endl;
+    //     for(auto it : p->neighbour)
+    //     {
+    //         cout<<it->pos.first<<" ";
+    //     }
+    //     cout<<endl;
+    // }
+
+
+    // ------------------- Priority queue sorted on packet rate , min heap---------
+
+    priority_queue<
 
 
 }
+
+
+
+// 1. node class ->done
+// 2.neighbours based on euclidean distance
+// 3.define a source and a sink
