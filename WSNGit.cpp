@@ -44,6 +44,14 @@ float euclidean(node *x , node *y)
 	
 }
 
+struct compareRate
+{
+    bool operator()(node* const&p1, node* const&p2)
+    {
+        return p1->rate < p2->rate;
+    }
+};
+
 int main()
 {
 	cout<<"Enter the Number of nodes";
@@ -90,7 +98,7 @@ int main()
 
     // ------------------- Priority queue sorted on packet rate , min heap---------
 
-    priority_queue<
+    priority_queue<node*,vector<node*>,compareRate> pq;
 
 
 }
@@ -100,3 +108,8 @@ int main()
 // 1. node class ->done
 // 2.neighbours based on euclidean distance
 // 3.define a source and a sink
+//sink ->rate = -1 
+// AC -> infinite capacity
+//hops to node with smallest rate and updates it by 1(generality)
+//termination : when all nodes have same value
+//Question : nodes also lose energy while functioning -> how to incorporate that
