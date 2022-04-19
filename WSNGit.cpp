@@ -1,6 +1,7 @@
 //WSN
 //range default 30 units
 //board 100 X 100
+//1st iteration -> 1 AC
 
 
 
@@ -58,6 +59,12 @@ int main()
 	int n;
 	cin>>n;
 	vector<node*> nod;
+	 // ------------------- Priority queue sorted on packet rate , min heap---------
+    // priority_queue<node*,vector<node*>,compareRate> pq; // O(nlogn)
+	priority_queue<pair<int,node*>,vector<pair<int,node*>>,greater<pair<int,node*>>> 
+	pq;
+
+	int maxr = INT_MIN; // max rate -> termination condition
 	for(int i = 0 ; i < n ; i++)
 	{
 		float x,y;
@@ -66,8 +73,10 @@ int main()
         int r;
         cout<<"Enter the rate of transfer(packets/s)"<<endl;
         cin>>r;
+		maxr = max(r,maxr);
 		node *temp = new node(x,y,r);
 		nod.push_back(temp);
+		pq.push({r,temp});// sorted on rate ascending
 	}
 
 	//assigning neighbours
@@ -83,7 +92,7 @@ int main()
 			}
 		}
 	}
-
+	//neighbours check
     // for(int i = 0 ; i < nod.size() ; i++)
     // {
     //     node *p = nod[i];
@@ -95,10 +104,20 @@ int main()
     //     cout<<endl;
     // }
 
-
-    // ------------------- Priority queue sorted on packet rate , min heap---------
-
-    priority_queue<node*,vector<node*>,compareRate> pq;
+	//at each stage , find lowest rate and give AC to it
+	cout<<endl;
+	int count = 1;
+	
+	while(!pq.empty() and pq.top().first != maxr)
+	{
+		cout<<"Iteration "<<count++<<endl;
+		node *temp = pq.top().second;
+		pq.pop();
+		cout<<"Rate of wsn at position x="<<temp->pos.first<<",y="<<temp->pos.second;
+		cout<<" increased from "<<temp->rate<<" to "<<temp->rate+1<<endl;
+		temp->rate = temp->rate+1;
+		pq.push({temp->rate,temp});
+	}
 
 
 }
@@ -113,3 +132,12 @@ int main()
 //hops to node with smallest rate and updates it by 1(generality)
 //termination : when all nodes have same value
 //Question : nodes also lose energy while functioning -> how to incorporate that
+
+
+// Sample Input
+// 5 
+// 0 0 5
+// 10 10 4
+// 30 30 7
+// 50 50 8
+// 80 80 7
