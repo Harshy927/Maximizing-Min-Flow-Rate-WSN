@@ -61,8 +61,8 @@ int main()
 	vector<node*> nod;
 	// ------------------- Priority queue sorted on packet rate , min heap---------
     // priority_queue<node*,vector<node*>,compareRate> pq; // O(nlogn)
-	// priority_queue<pair<int,node*>,vector<pair<int,node*>>,greater<pair<int,node*>>> 
-	// pq;
+	priority_queue<pair<int,node*>,vector<pair<int,node*>>,greater<pair<int,node*>>> 
+	pq;
 
 	int maxr = INT_MIN; // max rate -> termination condition
     int minr = INT_MAX; // min rate -> starting condition
@@ -70,10 +70,10 @@ int main()
 	for(int i = 0 ; i < n ; i++)
 	{
 		float x,y;
-		cout<<"enter the x and y coordinates"<<endl;
+		// cout<<"enter the x and y coordinates"<<endl;
 		cin>>x>>y;
         int r;
-        cout<<"Enter the rate of transfer(packets/s)"<<endl;
+        // cout<<"Enter the rate of transfer(packets/s)"<<endl;
         cin>>r;
 		maxr = max(r,maxr);
         if(r < minr)
@@ -111,46 +111,30 @@ int main()
     //     cout<<endl;
     // }
 
-	//at each stage , find lowest rate and give AC to it
-	// cout<<endl;
-	// int count = 1;
-	
-	// while(!pq.empty() and pq.top().first != maxr)
-	// {
-	// 	cout<<"Iteration "<<count++<<endl;
-	// 	node *temp = pq.top().second;
-	// 	pq.pop();
-	// 	cout<<"Rate of wsn at position x="<<temp->pos.first<<",y="<<temp->pos.second;
-	// 	cout<<" increased from "<<temp->rate<<" to "<<temp->rate+1<<endl;
-	// 	temp->rate = temp->rate+1;
-	// 	pq.push({temp->rate,temp});
-	// }
+	// at each stage , find lowest rate and give AC to it
+	cout<<endl;
+	int count = 1;
+	int cost = 0;
+	while(!pq.empty() and pq.top().first != maxr)
+	{
+		cout<<"Iteration "<<count++<<endl;
+		node *temp = pq.top().second;
+		pq.pop();
+		// cout<<"Rate of wsn at position x="<<temp->pos.first<<",y="<<temp->pos.second;
+		// cout<<" increased from "<<temp->rate<<" to "<<temp->rate+1<<endl;
+		temp->rate = temp->rate+1;
+        int d = euclidean(temp,pq.top().second);
+        cost += 1 + d;
+		pq.push({temp->rate,temp});
+        
+	}
+
+    cout<<"The total Cost = "<<cost<<endl;
 
 
 
     //Now we start from node having minr located at minIndex in our nod array
-    node* curr_node = nod[minIndex];
-    float maxratio = INT_MIN;
-    node *next_node = NULL;
 
-    while()
-    {
-        curr_node->rate = current_node->rate+1;
-        //for all neighbours of curr_node calculate rate/dist ratio
-        for(auto it : curr_node->neighbour)
-        {
-            float distance = euclidean(curr_node,it);
-            float ratio = it->rate/distance;
-            if(ratio > maxratio)
-            {
-                maxratio = ratio;
-                next_node = it;
-            }
-        }
-        // cost += ; cost updation here
-        curr_node = next_node;
-        maxratio = INT_MIN;
-    }
 }
 
 
