@@ -133,7 +133,7 @@ int main()
         }
         // cost += ; cost updation here
         //energy spent = 1kj(recharging) + 1kj per meter()
-        cost += 1 + distance;
+        cost += 1 + euclidean(curr_node,next_node);
         curr_node = next_node;
         maxratio = INT_MIN;
     }
