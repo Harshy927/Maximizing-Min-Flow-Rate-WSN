@@ -113,8 +113,8 @@ int main()
     float maxratio = INT_MIN;
     node *next_node = NULL;
     int count = 1;
-    int cost = 0;
-    while(curr_node->rate != maxr)
+    float cost = 0;
+    while(count < 10)
     {
         cout<<"Iteration "<<count++<<endl;
         curr_node->rate = curr_node->rate+1;
