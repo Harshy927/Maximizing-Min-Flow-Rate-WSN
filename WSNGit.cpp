@@ -114,8 +114,8 @@ int main()
 	// at each stage , find lowest rate and give AC to it
 	cout<<endl;
 	int count = 1;
-	int cost = 0;
-	while(!pq.empty() and pq.top().first != maxr)
+	float cost = 0;
+	while(count < 10)
 	{
 		cout<<"Iteration "<<count++<<endl;
 		node *temp = pq.top().second;
@@ -123,7 +123,7 @@ int main()
 		// cout<<"Rate of wsn at position x="<<temp->pos.first<<",y="<<temp->pos.second;
 		// cout<<" increased from "<<temp->rate<<" to "<<temp->rate+1<<endl;
 		temp->rate = temp->rate+1;
-        int d = euclidean(temp,pq.top().second);
+       float d = euclidean(temp,pq.top().second);
         cost += 1 + d;
 		pq.push({temp->rate,temp});
         
